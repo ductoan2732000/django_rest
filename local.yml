@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./compose/local/Dockerfile
+      target: api
+    image: api
+    container_name: api
+    depends_on:
+      - mysql
+    volumes:
+      - .:/src
+    env_file:
+      - ./.env
+    ports:
+      - "8083:8000"
+    command: /start-app.sh
+    networks:
+      - backend
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    env_file:
+      - .env
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - backend
+
+networks:
+  backend:
+
+volumes:
+  mysql_data:
+    driver: local
