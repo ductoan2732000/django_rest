@@ -6,4 +6,7 @@ python manage.py runserver
 
 # access the virtual env
 
-env\\Scripts\\activate
+python3 -m venv env
+source env/bin/activate # On Windows use `env\Scripts\activate`
+pip install django
+pip install djangorestframework
